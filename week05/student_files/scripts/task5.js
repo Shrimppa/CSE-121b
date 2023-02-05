@@ -60,7 +60,30 @@ document.querySelector("#message1").textContent = myMessage;
 document.querySelector("#message2").textContent = message;
 /* FETCH */
 // Step 1: Declare a global empty array variable to store a list of temples
-let templesArray = [];
+const div = document.querySelector("#temples");
+
+function output(temples) 
+{
+    const ol = document.createElement("ol");
+    temples.forEach((temple) => 
+    {
+        const li = document.createElement("li");
+        li.innerHTML = temple.templeName;
+        ol.append(li);
+    });
+    div.append(ol);
+}
+
+async function getTemples() 
+{
+    const response = await fetch("https://byui-cse.github.io/cse121b-course/week05/temples.json");
+    const data = await response.json();
+    console.log(data);
+    output(data);
+}
+
+getTemples();
+
 // Step 2: Declare a function named output that accepts a list of temples as an array argument and does the following for each temple:
 // - Creates an HTML <article> element
 // - Creates an HTML <h3> element and add the temple's templeName property to it
