@@ -11,14 +11,14 @@ dayOfWeek = dateTime.getDay();
 // Step 4: Declare a variable to hold a message that will be displayed
 let myMessage;
 // Step 5: Using an if statement, if the day of the week is a weekday (i.e. Monday - Friday), set the message variable to the string 'Hang in there!'
-if (dayOfWeek === 1 || 2 || 3 || 4 || 5)
+if (dayOfWeek == 1 || dayOfWeek == 2 || dayOfWeek == 3 || dayOfWeek == 4 || dayOfWeek == 5)
 {
     myMessage = "Hang in there!";    
 }
 // Step 6: Using an else statement, set the message variable to 'Woohoo!  It is the weekend!'
-else if (dayOfWeek === 0 || 6)
+else
 {
-    myMessage = "Woooo! It is the weekend!"
+    myMessage = "Woooo! It is the weekend!";
 }
 /* SWITCH, CASE, BREAK */
 
