@@ -67,17 +67,39 @@ function output(temples)
     const ol = document.createElement("ol");
     temples.forEach((temple) => 
     {
-        const li = document.createElement("li");
-        li.innerHTML = temple.templeName;
-        ol.append(li);
+        // const li = document.createElement("li");
+        // li.innerHTML = temple.templeName;
+        // ol.append(li);
+
+        let article = document.createElement("article");
+
+        let templeName = document.createElement("h3");
+        templeName.textContent = temple.templeName;
+
+        let location = document.createElement("h4");
+        location.textContent = temple.location;
+
+        let dedicated = document.createElement("h4");
+        dedicated.textContent = temple.dedicated;
+
+        let image = document.createElement("img");
+        image.setAttribute("src", temple.imageUrl);
+        image.setAttribute("alt", templeName);
+
+        article.appendChild(templeName);
+        article.appendChild(location);
+        article.appendChild(dedicated);
+        article.appendChild(image);
+
+        document.querySelector("#temples").appendChild(article);
     });
     div.append(ol);
 }
 
 async function getTemples() 
 {
-    const response = await fetch("https://byui-cse.github.io/cse121b-course/week05/temples.json");
-    const data = await response.json();
+    let response = await fetch("https://byui-cse.github.io/cse121b-course/week05/temples.json");
+    data = await response.json();
     console.log(data);
     output(data);
 }
@@ -92,35 +114,6 @@ getTemples();
 // - Creates an HTML <img> element and add the temple's imageUrl property to the src attribute and the temple's templeName property to the alt attribute
 // - Appends the <h3> element, the two <h4> elements, and the <img> element to the <article> element as children
 // - Appends the <article> element to the HTML element with an ID of temples
-const output = (templesArray) =>
-{
-    templesArray.forEach(elementTemple => 
-    {
-        let elementArticle = document.createElement("article");
-
-        let elementName = document.createElement("h3");
-        elementName.textContent = elementTemple.elementName;
-
-        let elementLocation = document.createElement("h4");
-        elementLocation.textContent = elementTemple.elementLocation;
-
-        let elementDedicated = document.createElement("h4");
-        elementDedicated.textContent = elementTemple.elementDedicated;
-
-        let elementImage = document.createElement("img");
-        elementImage.setAttribute("src", elementTemple.imageUrl);
-        elementImage.setAttribute("alt", elementName);
-
-        elementArticle.appendChild(elementName);
-        elementArticle.appendChild(elementLocation);
-        elementArticle.appendChild(elementDedicated);
-        elementArticle.appendChild(elementImage);
-
-        document.querySelector("#temples").appendChild(elementArticle);
-
-    });
-}
-
 // Step 3: Create another function called getTemples. Make it an async function.
 
 // Step 4: In the function, using the built-in fetch method, call this absolute URL: 'https://byui-cse.github.io/cse121b-course/week05/temples.json'. Create a variable to hold the response from your fetch. You should have the program wait on this line until it finishes.
@@ -128,13 +121,51 @@ const output = (templesArray) =>
 // Step 6: Finally, call the output function and pass it the list of temples. Execute your getTemples function to make sure it works correctly.
 
 // Step 7: Declare a function named reset that clears all of the <article> elements from the HTML element with an ID of temples
+const reset = () => 
+{
+    document.querySelector("#temples").innerHTML = "";
+}
 
-// Step 8: Declare a function named sortBy that does the following:
-// - Calls the reset function
-// - Sorts the global temple list by the currently selected value of the HTML element with an ID of sortBy
-// - Calls the output function passing in the sorted list of temples
+// // Step 8: Declare a function named sortBy that does the following:
+// // - Calls the reset function
+// // - Sorts the global temple list by the currently selected value of the HTML element with an ID of sortBy
+// // - Calls the output function passing in the sorted list of temples
 
-// Step 9: Add a change event listener to the HTML element with an ID of sortBy that calls the sortBy function
+const sortBy = () =>
+{
+    reset();
+
+    let myFilter = document.getElementById("sortBy").value;
+
+    switch (myFilter) {
+        case "templeNameAscending":
+            output(
+                data.sort((e, e2) => {
+                    let element1 = e.templeName;
+                    let element2 = e2.templeName;
+                    if (element1 < element2) return -1;
+                    else if (element1 > element2) return 1;
+                    else return 0;
+                })
+            );
+            break;
+        case "templeNameDescending":
+            output(
+                data.sort((e, e2) => {
+                    let element1 = e.templeName;
+                    let element2 = e2.templeName;
+                    if (element1 > element2) return -1;
+                    else if (element1 < element2) return 1;
+                    else return 0;
+                })
+            );
+            break;
+    }
+};
+
+// // Step 9: Add a change event listener to the HTML element with an ID of sortBy that calls the sortBy function
+
+document.querySelector("#sortBy").addEventListener("change", sortBy);
 
 /* STRETCH */
 
